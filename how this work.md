@@ -14,7 +14,7 @@
         H-->M{Window 'VPS Information'?}--yes-->N([func renewVPS])-->FF{found reCAPTCHA?};
         M--no-->E;
         N-->O([func CAPTCHA])-->P[fill text and submit renew];
-        FF--yes-->GG([func reCAPTCHA])-->II{found audio button?};
+        FF--yes-->GG([func reCAPTCHA])-->II{found audio button and get src?};
         FF--no-->P;
         II--yes-->JJ([func speech to text])-->KK{text empty?};
         II--no-->LL[Possibly block by google!];
