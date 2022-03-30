@@ -1,4 +1,3 @@
-[![HaxExtend](https://github.com/mybdye/HaxExtend_helium/actions/workflows/main.yml/badge.svg?event=workflow_dispatch)](https://github.com/mybdye/HaxExtend_helium/actions/workflows/main.yml)
 #### 计划
 - 
 #### 项目进度
@@ -24,7 +23,7 @@ TG_USER_ID
 ```
 ```BARK_KEY``` ```TG_BOT_TOKEN``` ```TG_USER_ID``` 可选，不填就没推送。 ```https://api.day.app/BARK_KEY/```
 #### 🍳 烹饪方法：1.2 Actions > Workflows [HaxExtend] > Run workflow
-<img src=http://mjjzp.cf/img/2022/03/30/e9512058f9026.png width=50% />
+<img src=./step.png width=50% />
 
 
 #### 触发说明：手动 + schedule
@@ -49,7 +48,7 @@ or
 ```
  🎉 Your VPS has been renewed until April 6, 2022
 ```
-<img src=http://mjjzp.cf/img/2022/03/30/9c291b0d7366c.jpg width=50% />
+<img src=./result.jpg width=50% />
 
 #### How This Work
 - https://github.com/mybdye/HaxExtend_helium/blob/master/howthiswork.md
