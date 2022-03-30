@@ -5,7 +5,7 @@
         B-->C{chrome crashed?};
         C--yes-->D[kill browser]-->B;
         C--no-->E([func login])-->F{found reCAPTCHA?};
-        F--yes-->G([func reCAPTCHA])-->I{found audio button?};
+        F--yes-->G([func reCAPTCHA])-->I{found audio button and get src?};
         I--yes-->J([func speech to text])-->K{text empty?};
         I--no-->L[Possibly block by google!];
         K--yes---->J;
