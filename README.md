@@ -1,27 +1,19 @@
 #### 计划
 - 
 #### 项目进度
-- 0330 添加了 tg push，workflow 也还有些问题
+- 0330 添加了 tg push，`func submit` 也还有些小问题
 - 0328 ~~能跑~~ 本地能跑，workflow 再研究下。
 - 0326 新建文件夹
 
 #### 🍳 烹饪方法：1.1 Settings > Secrets > Actions 添加以下变量
-```
-USER_ID
-```
-```
-PASS_WD
-```
-```
-BARK_KEY
-``` 
-```
-TG_BOT_TOKEN
-```
-```
-TG_USER_ID
-```
-```BARK_KEY``` ```TG_BOT_TOKEN``` ```TG_USER_ID``` 可选，不填就没推送。 ```https://api.day.app/BARK_KEY/```
+|YOU SECRET NAME|YOU SECRET VALUE|
+|-----|-----|
+|`USER_ID`|你的 id|
+|`PASS_WD`|你的密码|
+|`BARK_KEY`|(可选) https://api.day.app/BARK_KEY/|
+|`TG_BOT_TOKEN`|(可选) `xxxxxx:xxxxxxxxxxxxx`|
+|`TG_USER_ID`|(可选) 给 bot `@userinfobot` 发送 `/start`|
+
 #### 🍳 烹饪方法：1.2 Actions > Workflows [HaxExtend] > Run workflow
 <img src=./step.png width=50% />
 
