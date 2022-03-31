@@ -175,7 +175,6 @@ def submit():
     print('- submit')
     # 向下滚动，有时候提示找不到按钮（被其他控件cover）
     scroll_down(num_pixels=200)
-
     driver = get_driver()
     driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
     print('- submit clicked')
@@ -184,8 +183,8 @@ def submit():
     time.sleep(6)
     # 本页网址刷新后，重新获取当前的窗口
     driver.current_window_handle
-    time.sleep(2)
-    print('- title:', Window().title)
+    time.sleep(6)
+
     if Text('VPS Information').exists():
         print('- VPS Information found!')
         renewVPS()
@@ -196,6 +195,13 @@ def submit():
         login()
     elif Text('Invalid').exists():
         print('*** Invalid Username / Password ! ***')
+    elif Window().title =='Just a moment...':
+        print('*** maybe website load too slow ***')
+        print('- kill browser')
+        kill_browser()
+        print('- restart chrome and login again')
+        start_chrome(url=urlLogin)
+        login()
 
     else:
         print('- current url:', driver.current_url)
