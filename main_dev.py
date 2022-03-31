@@ -211,9 +211,10 @@ def submit():
 
     else:
         print('- current url:', driver.current_url)
-        body = ' *** 💣 some error in func submit! :) ***'
-        push(body)
-        print(body)
+        body = ' *** 💣 some error in func submit!, return to func login :) ***'
+        login()
+        #push(body)
+        #print(body)
 
 def renewVPS():
     global block
