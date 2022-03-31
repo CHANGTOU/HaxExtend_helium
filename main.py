@@ -73,7 +73,7 @@ def speechToText():
             print('*** speechToText issue! ***')
         attach_file(os.getcwd() + audioFile, 'Upload Audio File')
         print('- waiting for transcribe')
-        time.sleep(10)
+        time.sleep(6)
         textlist = find_all(S('.tab-panels--tab-content'))
         text = [key.web_element.text for key in textlist][0]
         print('- get text:', text)
@@ -84,11 +84,11 @@ def reCAPTCHA():
     global block
     print('- click checkbox')
     click(S('.recaptcha-checkbox-borderAnimation'))
-    time.sleep(5)
+    time.sleep(3)
     while S('#recaptcha-audio-button').exists():
         print('- audio button found')
         click(S('#recaptcha-audio-button'))
-        time.sleep(5)
+        time.sleep(3)
         print('- audio file link searching...')
         if Text('Alternatively, download audio as MP3').exists() or Text('或者以 MP3 格式下载音频').exists():
             block = False
@@ -111,13 +111,13 @@ def reCAPTCHA():
             # 切回第一个 tab
             driver = get_driver()
             driver.switch_to.window(driver.window_handles[0])
-            time.sleep(5)
+            time.sleep(3)
             print('- fill audio response')
             write(text, into=S('#audio-response'))
-            time.sleep(5)
+            time.sleep(3)
             print('- click recaptcha verify button')
             click(S('#recaptcha-verify-button'))
-            time.sleep(1)
+            time.sleep(3)
 
         elif Text('Try again later').exists() or Text('稍后重试').exists():
             textblock = S('.rc-doscaptcha-body-text').web_element.text
