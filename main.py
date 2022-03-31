@@ -177,9 +177,11 @@ def submit():
     # open a new tab
     driver = get_driver()
     driver.execute_script('''window.open('',"_blank")''')
+    # 切到新窗口
+    driver.switch_to.window(driver.window_handles[1])
+    # 等login 那边登陆后 刷新到 VPS Information 页面
     time.sleep(10)
     print('- title:', Window().title)
-
     #try:
     print('- switch to VPS Information')
     #switch_to('VPS')
