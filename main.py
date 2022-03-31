@@ -64,19 +64,24 @@ def switchToWindowSpeechToText():
 
 
 def speechToText():
-    switchToWindowSpeechToText()
+    #switchToWindowSpeechToText()
+    driver = get_driver()
+    driver.execute_script('''window.open('https://speech-to-text-demo.ng.bluemix.net/',"_blank")''')
+    switch_to('Speech to Text')
     text = ''
     i = 0
     while text == '':
         i = i + 1
         if i > 3:
             print('*** speechToText issue! ***')
+            break
         attach_file(os.getcwd() + audioFile, 'Upload Audio File')
         print('- waiting for transcribe')
         time.sleep(6)
         textlist = find_all(S('.tab-panels--tab-content'))
         text = [key.web_element.text for key in textlist][0]
         print('- get text:', text)
+    driver.close()
     return text
 
 
@@ -177,16 +182,17 @@ def submit():
     # open a new tab
     driver = get_driver()
     driver.execute_script('''window.open('',"_blank")''')
+    time.sleep(2)
     # 切到新窗口
     driver.switch_to.window(driver.window_handles[1])
     # 等login 那边登陆后 刷新到 VPS Information 页面
-    time.sleep(10)
+    time.sleep(2)
     print('- title:', Window().title)
     #try:
     print('- switch to VPS Information')
     #switch_to('VPS')
     driver.switch_to.window(driver.window_handles[0])
-    time.sleep(1)
+    time.sleep(6)
     print('- title:', Window().title)
     if Text('VPS Information').exists():
         print('- VPS Information')
