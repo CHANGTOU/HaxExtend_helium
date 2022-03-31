@@ -199,8 +199,10 @@ def submit():
         print('*** maybe website load too slow ***')
         print('- kill browser')
         kill_browser()
+        time.sleep(6)
         print('- restart chrome and login again')
         start_chrome(url=urlLogin)
+        time.sleep(2)
         login()
 
     else:
