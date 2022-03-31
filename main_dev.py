@@ -171,9 +171,7 @@ def login():
             print('- reCAPTCHA not found!')
             submit()
 
-
 def submit():
-    # 大 BUG
     print('- submit')
     # 向下滚动，有时候提示找不到按钮（被其他控件cover）
     scroll_down(num_pixels=200)
@@ -183,22 +181,12 @@ def submit():
     print('- submit clicked')
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
-    time.sleep(2)
-    driver = get_driver()
-    driver.execute_script('''window.open('https://hax.co.id/vps-info',"_blank")''')
-    time.sleep(2)
-    # 切到新窗口
-    driver.switch_to.window(driver.window_handles[1])
-    # 等login 那边登陆后 刷新到 VPS Information 页面
-    time.sleep(2)
-    print('- title:', Window().title)
-    #try:
-    print('- switch to VPS Information')
-    #switch_to('VPS')
-    driver.switch_to.window(driver.window_handles[0])
     time.sleep(6)
+    # 本页网址刷新后，重新获取当前的窗口
+    driver.current_window_handle
+    time.sleep(2)
     print('- title:', Window().title)
-    if Window('VPS Information').exists():
+    if Text('VPS Information').exists():
         print('- VPS Information found!')
         renewVPS()
     elif Text('Please correct your captcha!.').exists():
@@ -329,7 +317,6 @@ def funcCAPTCHA():
 
     print('- captcha result:', number1, method, number2, '=', captcha_result)
     return captcha_result
-
 
 '''
 # 调试用 ****************
