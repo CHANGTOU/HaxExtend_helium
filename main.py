@@ -50,6 +50,7 @@ except:
 audioFile = "\\audio.mp3"
 urlLogin = 'https://hax.co.id/login'
 urlRenew = 'https://hax.co.id/vps-renew/'
+urlInfo = 'https://hax.co.id/vps-info'
 
 
 def switchToWindowSpeechToText():
@@ -180,8 +181,9 @@ def submit():
     print('- submit clicked')
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
+    time.sleep(2)
     driver = get_driver()
-    driver.execute_script('''window.open('',"_blank")''')
+    driver.execute_script('''window.open('https://hax.co.id/vps-info',"_blank")''')
     time.sleep(2)
     # 切到新窗口
     driver.switch_to.window(driver.window_handles[1])
@@ -194,8 +196,8 @@ def submit():
     driver.switch_to.window(driver.window_handles[0])
     time.sleep(6)
     print('- title:', Window().title)
-    if Text('VPS Information').exists():
-        print('- VPS Information')
+    if Window('VPS Information').exists():
+        print('- VPS Information found!')
         renewVPS()
     elif Text('Please correct your captcha!.').exists():
         print('*** Network issue maybe, reCAPTCHA load fail! ***')
