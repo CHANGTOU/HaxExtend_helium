@@ -133,7 +133,8 @@ def reCAPTCHA():
             block = True
             break
         else:
-            print('*** audio download element not found, or try to change your browser display language ***')
+            print('*** audio download element not found,return to func renew ***')
+            renewVPS()
     return block
 
 
