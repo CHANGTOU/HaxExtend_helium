@@ -180,10 +180,10 @@ def submit():
     print('- submit clicked')
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
-    time.sleep(6)
+    time.sleep(30)
     # 本页网址刷新后，重新获取当前的窗口
     driver.current_window_handle
-    time.sleep(6)
+    time.sleep(2)
 
     if Text('VPS Information').exists():
         print('- VPS Information found!')
