@@ -1,3 +1,7 @@
+# HaxExtend_helium
+#### 计划
+- TBD
+
 #### 状态
 - 已知 BUG，submit 提交后页面刷新到页面VPS Information 的过程中大概率出现问题，导致下一步renew 无法进行。HaxExtend那个仓库也一样是一个原因。
 
