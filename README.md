@@ -1,5 +1,6 @@
-#### 计划
-- 
+#### 状态
+- 已知 BUG，submit 提交后页面刷新到页面VPS Information 的过程中大概率出现问题，导致下一步renew 无法进行。HaxExtend那个仓库也一样是一个原因。
+
 #### 项目进度
 - 0330 添加了 tg push，`func submit` 也还有些小问题
 - 0328 ~~能跑~~ 本地能跑，workflow 再研究下。
