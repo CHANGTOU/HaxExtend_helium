@@ -14,7 +14,7 @@ from selenium.webdriver import FirefoxOptions
 from selenium.webdriver import ChromeOptions
 
 #options = FirefoxOptions()
-options = ChromeOptions()
+#options = ChromeOptions()
 #options.add_argument("--width=2560")
 #options.add_argument("--height=1440")
 
@@ -206,15 +206,15 @@ def submit():
         login()
     elif Text('Invalid').exists():
         print('*** Invalid Username / Password ! ***')
-    elif Window().title =='Just a moment...':
-        print('*** maybe website load too slow ***')
-        print('- kill browser')
-        kill_browser()
-        time.sleep(6)
-        print('- restart chrome and login again')
-        start_chrome(url=urlLogin)
-        time.sleep(2)
-        login()
+    # elif Window().title =='Just a moment...':
+    #     print('*** maybe website load too slow ***')
+    #     print('- kill browser')
+    #     kill_browser()
+    #     time.sleep(6)
+    #     print('- restart chrome and login again')
+    #     start_chrome(url=urlLogin)
+    #     time.sleep(2)
+    #     login()
 
     else:
         print('- current url:', driver.current_url)
