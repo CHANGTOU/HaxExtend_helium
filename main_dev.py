@@ -142,48 +142,59 @@ def reCAPTCHA():
 def login():
     print('- login')
     time.sleep(5)
-    if S('@username').exists() is False:
-        go_to(urlLogin)
-        login()
+    # if S('@username').exists() is False:
+    #     go_to(urlLogin)
+    #     login()
+    wait_until(Text('Login to Hax.co.id').exists)
+    #else:
+    print('- fill user id')
+    if USER_ID == '':
+        print('*** USER_ID is empty ***')
+        kill_browser()
     else:
-        print('- fill user id')
-        if USER_ID == '':
-            print('*** USER_ID is empty ***')
-            kill_browser()
-        else:
-            write(USER_ID, into=S('@username'))
-        print('- fill password')
-        if PASS_WD == '':
-            print('*** PASS_WD is empty ***')
-            kill_browser()
-        else:
-            write(PASS_WD, into=S('@password'))
+        write(USER_ID, into=S('@username'))
+    print('- fill password')
+    if PASS_WD == '':
+        print('*** PASS_WD is empty ***')
+        kill_browser()
+    else:
+        write(PASS_WD, into=S('@password'))
 
-        if Text('reCAPTCHA').exists():
-            # if S('#recaptcha-token').exists():
-            print('- reCAPTCHA found!')
-            block = reCAPTCHA()
-            if block:
-                print('*** Possibly blocked by google! ***')
-            else:
-                submit()
+    if Text('reCAPTCHA').exists():
+        # if S('#recaptcha-token').exists():
+        print('- reCAPTCHA found!')
+        block = reCAPTCHA()
+        if block:
+            print('*** Possibly blocked by google! ***')
         else:
-            print('- reCAPTCHA not found!')
             submit()
+    else:
+        print('- reCAPTCHA not found!')
+        submit()
 
 def submit():
     print('- submit')
     # 向下滚动，有时候提示找不到按钮（被其他控件cover）
     scroll_down(num_pixels=200)
-    driver = get_driver()
-    driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
+    click('Submit')
+    # driver = get_driver()
+    # driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
     print('- submit clicked')
+    driver = get_driver()
+    driver.execute_script('''window.open('',"_blank")''')
+    driver.switch_to.window(driver.window_handles[1])
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
-    time.sleep(30)
+    time.sleep(10)
+    driver.switch_to.window(driver.window_handles[0])
+    # try:
+    #     switch_to('VPS')
+    # except:
+    #     switch_to('Login')
     # 本页网址刷新后，重新获取当前的窗口
-    driver.current_window_handle
-    time.sleep(2)
+    # driver.current_window_handle
+    # time.sleep(2)
+    print('- title:', Window().title)
 
     if Text('VPS Information').exists():
         print('- VPS Information found!')
@@ -207,6 +218,7 @@ def submit():
 
     else:
         print('- current url:', driver.current_url)
+        print('- title:', Window().title)
         body = ' *** 💣 some error in func submit!, return to func login :) ***'
         #login()
         push(body)
@@ -339,8 +351,6 @@ print('- Hax loading...')
 try:
     start_chrome(url=urlLogin)
 except:
-    print('*** Kill browser ***')
-    kill_browser()
     start_chrome(url=urlLogin)
 print('- title:', Window().title)
 # # 向下滚动
