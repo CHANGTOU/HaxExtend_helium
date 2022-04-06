@@ -197,12 +197,12 @@ def submit():
         print('- VPS Information found!')
         renewVPS()
     except:
-        print('*** load VPS Information fail! ***')
         print('- title:', Window().title)
         body = ' *** 💣 some error in func submit!, stop running ***'
         # login()
         push(body)
         print(body)
+        kill_browser()
 
 
 def renewVPS():
