@@ -178,32 +178,35 @@ def submit():
     # driver = get_driver()
     # driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
     print('- submit clicked')
-    driver = get_driver()
-    driver.execute_script('''window.open('',"_blank")''')
-    driver.switch_to.window(driver.window_handles[1])
-    # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
-    # open a new tab
-    time.sleep(20)
-    driver.switch_to.window(driver.window_handles[0])
+    # driver = get_driver()
+    # driver.execute_script('''window.open('',"_blank")''')
+    # driver.switch_to.window(driver.window_handles[1])
+    # # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
+    # # open a new tab
+    # time.sleep(20)
+    # driver.switch_to.window(driver.window_handles[0])
     # try:
     #     switch_to('VPS')
     # except:
     #     switch_to('Login')
     # 本页网址刷新后，重新获取当前的窗口
     # driver.current_window_handle
-    # time.sleep(2)
+    time.sleep(6)
     print('- title:', Window().title)
 
-    if Text('VPS Information').exists():
-        print('- VPS Information found!')
-        renewVPS()
-    elif Text('Please correct your captcha!.').exists():
+    try:
+        wait_until(Text('Please correct your captcha!.').exists)
         print('*** Network issue maybe, reCAPTCHA load fail! ***')
         go_to(urlLogin)
         time.sleep(2)
         login()
-    elif Text('Invalid').exists():
+    except:
+        pass
+    try:
+        wait_until(Text('Invalid').exists)
         print('*** Invalid Username / Password ! ***')
+    except:
+        pass
     # elif Window().title =='Just a moment...':
     #     print('*** maybe website load too slow ***')
     #     print('- kill browser')
@@ -213,9 +216,12 @@ def submit():
     #     start_chrome(url=urlLogin)
     #     time.sleep(2)
     #     login()
-
-    else:
-        print('- current url:', driver.current_url)
+    try:
+        wait_until(Text('VPS Information').exists)
+        print('- VPS Information found!')
+        renewVPS()
+    except:
+        print('*** load VPS Information fail! ***')
         print('- title:', Window().title)
         body = ' *** 💣 some error in func submit!, return to func login :) ***'
         # login()
@@ -351,6 +357,7 @@ print('- Hax loading...')
 try:
     start_chrome(url=urlLogin)
 except:
+    print('*** chrome may crash,restart driver ***')
     start_chrome(url=urlLogin)
 print('- title:', Window().title)
 # # 向下滚动
