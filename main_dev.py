@@ -22,13 +22,13 @@ try:
     USER_ID = os.environ['USER_ID']
 except:
     # 本地调试用
-    USER_ID = ''
+    USER_ID = '334255766'
 
 try:
     PASS_WD = os.environ['PASS_WD']
 except:
     # 本地调试用
-    PASS_WD = ''
+    PASS_WD = '44Hzgqgnd6XptBW'
 
 try:
     BARK_KEY = os.environ['BARK_KEY']
@@ -185,7 +185,7 @@ def submit():
     driver.switch_to.window(driver.window_handles[1])
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
-    time.sleep(10)
+    time.sleep(20)
     driver.switch_to.window(driver.window_handles[0])
     # try:
     #     switch_to('VPS')
@@ -202,7 +202,7 @@ def submit():
     elif Text('Please correct your captcha!.').exists():
         print('*** Network issue maybe, reCAPTCHA load fail! ***')
         go_to(urlLogin)
-        time.sleep(1)
+        time.sleep(2)
         login()
     elif Text('Invalid').exists():
         print('*** Invalid Username / Password ! ***')
