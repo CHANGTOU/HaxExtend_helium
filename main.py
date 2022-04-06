@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 # https://github.com/mybdye 🌟
 
-import time
 import os
 import ssl
+import time
 import urllib
+
 import requests
-
 from helium import *
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver import FirefoxOptions
-from selenium.webdriver import ChromeOptions
 
-#options = FirefoxOptions()
-options = ChromeOptions()
-#options.add_argument("--width=2560")
-#options.add_argument("--height=1440")
+# options = FirefoxOptions()
+# options = ChromeOptions()
+# options.add_argument("--width=2560")
+# options.add_argument("--height=1440")
 
 try:
     USER_ID = os.environ['USER_ID']
@@ -66,7 +63,7 @@ def switchToWindowSpeechToText():
 
 
 def speechToText():
-    #switchToWindowSpeechToText()
+    # switchToWindowSpeechToText()
     driver = get_driver()
     driver.execute_script('''window.open('https://speech-to-text-demo.ng.bluemix.net/',"_blank")''')
     switch_to('Speech to Text')
@@ -129,7 +126,7 @@ def reCAPTCHA():
         elif Text('Try again later').exists() or Text('稍后重试').exists():
             textblock = S('.rc-doscaptcha-body-text').web_element.text
             print(textblock)
-            body = ' *** 💣 Possibly blocked by google! ***\n'+textblock
+            body = ' *** 💣 Possibly blocked by google! ***\n' + textblock
             push(body)
             block = True
             break
@@ -142,78 +139,89 @@ def reCAPTCHA():
 def login():
     print('- login')
     time.sleep(5)
-    if S('@username').exists() is False:
-        go_to(urlLogin)
-        login()
+    # if S('@username').exists() is False:
+    #     go_to(urlLogin)
+    #     login()
+    wait_until(Text('Login to Hax.co.id').exists)
+    # else:
+    print('- fill user id')
+    if USER_ID == '':
+        print('*** USER_ID is empty ***')
+        kill_browser()
     else:
-        print('- fill user id')
-        if USER_ID == '':
-            print('*** USER_ID is empty ***')
-            kill_browser()
-        else:
-            write(USER_ID, into=S('@username'))
-        print('- fill password')
-        if PASS_WD == '':
-            print('*** PASS_WD is empty ***')
-            kill_browser()
-        else:
-            write(PASS_WD, into=S('@password'))
+        write(USER_ID, into=S('@username'))
+    print('- fill password')
+    if PASS_WD == '':
+        print('*** PASS_WD is empty ***')
+        kill_browser()
+    else:
+        write(PASS_WD, into=S('@password'))
 
-        if Text('reCAPTCHA').exists():
-            # if S('#recaptcha-token').exists():
-            print('- reCAPTCHA found!')
-            block = reCAPTCHA()
-            if block:
-                print('*** Possibly blocked by google! ***')
-            else:
-                submit()
+    if Text('reCAPTCHA').exists():
+        # if S('#recaptcha-token').exists():
+        print('- reCAPTCHA found!')
+        block = reCAPTCHA()
+        if block:
+            print('*** Possibly blocked by google! ***')
         else:
-            print('- reCAPTCHA not found!')
             submit()
+    else:
+        print('- reCAPTCHA not found!')
+        submit()
 
 
 def submit():
-    # 大 BUG
     print('- submit')
     # 向下滚动，有时候提示找不到按钮（被其他控件cover）
     scroll_down(num_pixels=200)
-
-    driver = get_driver()
-    driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
+    click('Submit')
+    # driver = get_driver()
+    # driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
     print('- submit clicked')
+    driver = get_driver()
+    driver.execute_script('''window.open('',"_blank")''')
+    driver.switch_to.window(driver.window_handles[1])
     # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
     # open a new tab
-    time.sleep(2)
-    driver = get_driver()
-    driver.execute_script('''window.open('https://hax.co.id/vps-info',"_blank")''')
-    time.sleep(2)
-    # 切到新窗口
-    driver.switch_to.window(driver.window_handles[1])
-    # 等login 那边登陆后 刷新到 VPS Information 页面
-    time.sleep(2)
-    print('- title:', Window().title)
-    #try:
-    print('- switch to VPS Information')
-    #switch_to('VPS')
+    time.sleep(20)
     driver.switch_to.window(driver.window_handles[0])
-    time.sleep(6)
+    # try:
+    #     switch_to('VPS')
+    # except:
+    #     switch_to('Login')
+    # 本页网址刷新后，重新获取当前的窗口
+    # driver.current_window_handle
+    # time.sleep(2)
     print('- title:', Window().title)
-    if Window('VPS Information').exists():
+
+    if Text('VPS Information').exists():
         print('- VPS Information found!')
         renewVPS()
     elif Text('Please correct your captcha!.').exists():
         print('*** Network issue maybe, reCAPTCHA load fail! ***')
         go_to(urlLogin)
-        time.sleep(1)
+        time.sleep(2)
         login()
     elif Text('Invalid').exists():
         print('*** Invalid Username / Password ! ***')
+    # elif Window().title =='Just a moment...':
+    #     print('*** maybe website load too slow ***')
+    #     print('- kill browser')
+    #     kill_browser()
+    #     time.sleep(6)
+    #     print('- restart chrome and login again')
+    #     start_chrome(url=urlLogin)
+    #     time.sleep(2)
+    #     login()
 
     else:
         print('- current url:', driver.current_url)
-        body = ' *** 💣 some error in func submit! :) ***'
+        print('- title:', Window().title)
+        body = ' *** 💣 some error in func submit!, return to func login :) ***'
+        # login()
         push(body)
         print(body)
+
 
 def renewVPS():
     global block
@@ -343,8 +351,6 @@ print('- Hax loading...')
 try:
     start_chrome(url=urlLogin)
 except:
-    print('*** Kill browser ***')
-    kill_browser()
     start_chrome(url=urlLogin)
 print('- title:', Window().title)
 # # 向下滚动
