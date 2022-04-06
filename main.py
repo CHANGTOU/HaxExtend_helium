@@ -10,11 +10,6 @@ import requests
 from helium import *
 from selenium.webdriver.common.by import By
 
-# options = FirefoxOptions()
-# options = ChromeOptions()
-# options.add_argument("--width=2560")
-# options.add_argument("--height=1440")
-
 try:
     USER_ID = os.environ['USER_ID']
 except:
@@ -107,10 +102,6 @@ def reCAPTCHA():
             urllib.request.urlretrieve(src, os.getcwd() + audioFile)
             text = speechToText()
             print('- waiting for switch to hax window')
-            # try:
-            #     switch_to('Login')
-            # except:
-            #     switch_to('Renew VPS')
 
             # 切回第一个 tab
             driver = get_driver()
@@ -175,22 +166,8 @@ def submit():
     # 向下滚动，有时候提示找不到按钮（被其他控件cover）
     scroll_down(num_pixels=200)
     click('Submit')
-    # driver = get_driver()
-    # driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/div/div/div/div/div/form/button').click()
     print('- submit clicked')
-    # driver = get_driver()
-    # driver.execute_script('''window.open('',"_blank")''')
-    # driver.switch_to.window(driver.window_handles[1])
-    # # 页面跳转后貌似有点bug，所以新建个标签页，等待再切回来
-    # # open a new tab
-    # time.sleep(20)
-    # driver.switch_to.window(driver.window_handles[0])
-    # try:
-    #     switch_to('VPS')
-    # except:
-    #     switch_to('Login')
-    # 本页网址刷新后，重新获取当前的窗口
-    # driver.current_window_handle
+
     time.sleep(6)
     print('- title:', Window().title)
 
@@ -207,15 +184,6 @@ def submit():
         print('*** Invalid Username / Password ! ***')
     except:
         pass
-    # elif Window().title =='Just a moment...':
-    #     print('*** maybe website load too slow ***')
-    #     print('- kill browser')
-    #     kill_browser()
-    #     time.sleep(6)
-    #     print('- restart chrome and login again')
-    #     start_chrome(url=urlLogin)
-    #     time.sleep(2)
-    #     login()
     try:
         wait_until(Text('VPS Information').exists)
         print('- VPS Information found!')
@@ -254,7 +222,10 @@ def renewVPS():
                 result = [key.web_element.text for key in textList][0]
                 print('*** Possibly blocked by google! ***')
                 print(result)
-                renewVPS()
+                body = '*** Possibly blocked by google! ***'
+                # renewVPS()
+                push(body)
+                kill_browser()
             else:
                 # 向下滚动
                 scroll_down(num_pixels=200)
@@ -342,14 +313,6 @@ def funcCAPTCHA():
 
     print('- captcha result:', number1, method, number2, '=', captcha_result)
     return captcha_result
-
-
-'''
-# 调试用 ****************
-responseReCAPTCHA = requests.get(url=f'https://www.recaptcha.net/recaptcha/api.js')
-print('ReCAPTCHA Status Code:', responseReCAPTCHA.status_code)
-# 调试用 ****************
-'''
 
 block = False
 print('- Hax loading...')
