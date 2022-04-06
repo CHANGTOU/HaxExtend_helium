@@ -168,7 +168,15 @@ def submit():
     click('Submit')
     print('- submit clicked')
 
-    time.sleep(6)
+    time.sleep(4)
+    print('- title:', Window().title)
+    i = 0
+    while Window().title == 'Just a moment...':
+        time.sleep(2)
+        if i>20:
+            break
+        i = i+2
+        print('- wait', i)
     print('- title:', Window().title)
 
     try:
@@ -191,7 +199,7 @@ def submit():
     except:
         print('*** load VPS Information fail! ***')
         print('- title:', Window().title)
-        body = ' *** 💣 some error in func submit!, return to func login :) ***'
+        body = ' *** 💣 some error in func submit!, stop running ***'
         # login()
         push(body)
         print(body)
